@@ -1,0 +1,21 @@
+export const AppError = {
+  USER_EXISTS: 'Пользователь с именем или почтой уже существует',
+  USER_DONT_EXIST: 'Пользователь не найден',
+  INVALID_CREDENTIALS: 'Недействительные учетные данные',
+  RANOBE_NOT_FOUND: 'Произведение не найдено',
+  INVALID_ID: 'ID недействителен или имеет неправильный формат',
+  MISSING_RANOBE_ID: 'ranobeId is required',
+  MISSING_CHAPTER_NUMBER: 'chapterNumber is required',
+  CHAPTER_NOT_FOUND: 'Глава не найдена',
+  PASSWORD_LENGTH: 'Пароль должен быть длиннее или равен 6 символам',
+  LOGIN_LENGTH: 'Логин должен быть длиннее или равен 6 символам',
+  LOGIN_MATCH: 'Логин может содержать только буквы, цифры, дефис и нижнее подчёркивание',
+  PASSWORD_MATCH:
+    'Пароль должен содержать хотя бы одну заглавную букву, одну строчную букву и одну цифру',
+  IMAGE_TYPE: 'Разрешены только файлы изображений.',
+  UPLOAD_IMAGE: 'Ошибка при загрузке картинки',
+  UPDATE_USER: 'Ошибка при обновлении пользователя',
+  COMMENT_NOT_FOUND: 'Комментарий не найден',
+  COMMENT_DELETE_FORBIDDEN: 'Нет прав на удаление данного комментария',
+  COMMENT_EDIT_FORBIDDEN: 'Нет прав на изменение данного комментария',
+};
