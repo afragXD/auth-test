@@ -2,6 +2,7 @@ export const AppError = {
   USER_EXISTS: 'Пользователь с именем или почтой уже существует',
   USER_DONT_EXIST: 'Пользователь не найден',
   INVALID_CREDENTIALS: 'Недействительные учетные данные',
+  INVALID_PASSWORD: 'Неверный пароль.',
   RANOBE_NOT_FOUND: 'Произведение не найдено',
   INVALID_ID: 'ID недействителен или имеет неправильный формат',
   MISSING_RANOBE_ID: 'ranobeId is required',
