@@ -15,7 +15,7 @@ async function bootstrap() {
 
   const config: ConfigService = app.get(ConfigService);
   const port = Number(config.getOrThrow<number>('PORT'));
-  const redis = new IORedis(config.getOrThrow<string>('REDIS_URI'));
+  const redis = new IORedis(config.getOrThrow<string>('VALKEY_URI'));
   const redisStore = new RedisStore({
     client: redis,
     prefix: config.getOrThrow<string>('SESSION_FOLDER'),

@@ -17,21 +17,21 @@ services:
     networks:
       - backend
 
-  redis:
-    container_name: redis
-    image: redis:7.4
+  valkey:
+    container_name: valkey
+    image: valkey/valkey:8.1
     restart: always
     ports:
       - 6379:6379
-    command: redis-server --requirepass ${REDIS_PASSWORD}
+    command: valkey-server --requirepass ${VALKEY_PASSWORD}
     volumes:
-      - redis_data:/data
+      - valkey_data:/data
     networks:
       - backend
 
 volumes:
   postgres_data:
-  redis_data:
+  valkey_data:
 
 networks:
   backend:
