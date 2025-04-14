@@ -4,11 +4,32 @@
 $ npm install
 ```
 
-## Migration
+## Docker
+1) Add `.env`
+2)
 ```bash
+# linux
 $ set -a && source .env && set +a
 
-#or
+#or win
+
+Get-Content .env | ForEach-Object {
+    if ($_ -match '^\s*([^=]+)=(.*)$') {
+        [System.Environment]::SetEnvironmentVariable($matches[1], $matches[2], [System.EnvironmentVariableTarget]::Process)
+    }
+}
+```
+3)
+```bash
+docker compose up -d
+```
+
+## Migration
+```bash
+# linux
+$ set -a && source .env && set +a
+
+#or win
 
 Get-Content .env | ForEach-Object {
     if ($_ -match '^\s*([^=]+)=(.*)$') {
@@ -17,11 +38,8 @@ Get-Content .env | ForEach-Object {
 }
 
 
-# create table Todos
-$ npx sequelize-cli db:migrate
-
-# drop table Todos
-$ npx sequelize-cli db:migrate:undo
+# create tables
+npx prisma db push
 ```
 
 ## Running the app
