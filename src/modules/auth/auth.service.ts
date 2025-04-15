@@ -58,13 +58,15 @@ export class AuthService {
     const providerInstance = this.providerService.findByService(provider);
     const profile = await providerInstance!.findUserByCode(code);
 
-    const isEmailExist = await this.userService.findByEmail(profile.email);
-    if (isEmailExist) throw new ConflictException(AppError.USER_EXISTS);
-
     const account = await this.prismaService.account.findFirst({
       where: {
-        id: profile.id,
         provider: profile.provider,
+        user: {
+          email: profile.email,
+        },
+      },
+      include: {
+        user: true,
       },
     });
 
@@ -73,6 +75,9 @@ export class AuthService {
     if (user) {
       return this.saveSession(req, user);
     }
+
+    const isEmailExist = await this.userService.findByEmail(profile.email);
+    if (isEmailExist) throw new ConflictException(AppError.USER_EXISTS);
 
     user = await this.userService.create(
       profile.email,

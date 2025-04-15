@@ -49,7 +49,7 @@ export class UserService {
     const user = await this.prismaService.user.create({
       data: {
         email,
-        password: password ? await hash(password) : '',
+        password: password ? await hash(password) : null,
         displayName,
         picture,
         method,
