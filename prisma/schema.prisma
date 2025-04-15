@@ -22,8 +22,6 @@ model User {
   isVerified Boolean @default(false) @map("is_verified")
   isTwoFactorEnabled Boolean @default(false) @map("is_two_factor_enabled")
 
-  method AuthMethod
-
   accounts Account[]
 
   createdAt DateTime @default(now()) @map("created_at")
@@ -69,11 +67,11 @@ enum UserRole {
   ADMIN
 }
 
-enum AuthMethod {
-  CREDENTIALS
-  GOOGLE
-  YANDEX
-}
+// enum AuthMethod {
+//   CREDENTIALS
+//   GOOGLE
+//   YANDEX
+// }
 
 enum TokenType {
   VERIFICATION

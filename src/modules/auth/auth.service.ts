@@ -9,7 +9,7 @@ import { RegisterDto } from './dto/register.dto';
 import { UserService } from '../user/user.service';
 import { Request, Response } from 'express';
 import { AppError } from '../../common/errors';
-import { AuthMethod, User } from 'prisma/__generated__';
+import { User } from 'prisma/__generated__';
 import { LoginDto } from './dto/login.dto';
 import { verify } from 'argon2';
 import { ConfigService } from '@nestjs/config';
@@ -30,14 +30,7 @@ export class AuthService {
 
     if (isExists) throw new ConflictException(AppError.USER_EXISTS);
 
-    const newUser = await this.userService.create(
-      dto.email,
-      dto.password,
-      dto.name,
-      '',
-      AuthMethod.CREDENTIALS,
-      true,
-    );
+    const newUser = await this.userService.create(dto.email, dto.password, dto.name, '', true);
 
     return this.saveSession(req, newUser);
   }
@@ -70,28 +63,16 @@ export class AuthService {
       },
     });
 
-    let user = account?.userId ? await this.userService.findById(account.userId) : null;
-
-    if (user) {
-      return this.saveSession(req, user);
+    if (account?.user) {
+      return this.saveSession(req, account.user);
     }
 
-    const isEmailExist = await this.userService.findByEmail(profile.email);
-    if (isEmailExist) throw new ConflictException(AppError.USER_EXISTS);
+    const existingUser = await this.userService.findByEmail(profile.email);
 
-    user = await this.userService.create(
-      profile.email,
-      '',
-      profile.name,
-      profile.picture,
-      AuthMethod[profile.provider.toUpperCase()],
-      true,
-    );
-
-    if (!account) {
+    if (existingUser) {
       await this.prismaService.account.create({
         data: {
-          userId: user.id,
+          userId: existingUser.id,
           type: 'oauth',
           provider: profile.provider,
           accessToken: profile.access_token,
@@ -99,9 +80,30 @@ export class AuthService {
           expiresAt: profile.expires_at!,
         },
       });
+
+      return this.saveSession(req, existingUser);
     }
 
-    return this.saveSession(req, user);
+    const newUser = await this.userService.create(
+      profile.email,
+      '',
+      profile.name,
+      profile.picture,
+      true,
+    );
+
+    await this.prismaService.account.create({
+      data: {
+        userId: newUser.id,
+        type: 'oauth',
+        provider: profile.provider,
+        accessToken: profile.access_token,
+        refreshToken: profile.refresh_token,
+        expiresAt: profile.expires_at!,
+      },
+    });
+
+    return this.saveSession(req, newUser);
   }
 
   async logout(req: Request, res: Response): Promise<void> {
