@@ -15,6 +15,7 @@ import { verify } from 'argon2';
 import { ConfigService } from '@nestjs/config';
 import { ProviderService } from './provider/provider.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { toUserResponceDto } from '@/utils/toUserResponceDto';
 
 @Injectable()
 export class AuthService {
@@ -130,7 +131,7 @@ export class AuthService {
         if (error) {
           return reject(new InternalServerErrorException('Не удалось сохранить сессию.'));
         }
-        resolve({ user });
+        resolve({ user: toUserResponceDto(user) });
       });
     });
   }
