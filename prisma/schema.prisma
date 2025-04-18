@@ -23,6 +23,11 @@ model User {
   isTwoFactorEnabled Boolean @default(false) @map("is_two_factor_enabled")
 
   accounts Account[]
+  rating UserRating?
+
+  gamesAsPlayer1 Game[] @relation("player1")
+  gamesAsPlayer2 Game[] @relation("player2")
+  spectators Game[] @relation("spectators")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -62,16 +67,54 @@ model Token {
   @@map("tokens")
 }
 
+model Game {
+  id String @id @default(uuid())
+
+  player1 User @relation("player1", fields: [player1Id], references: [id])
+  player1Id String @map("player1_id")
+
+  player2 User? @relation("player2", fields: [player2Id], references: [id])
+  player2Id String? @map("player2_id")
+
+  spectators User[] @relation("spectators")
+
+  status GameStatus @default(PENDING)
+  boardState Json? @map("board_state")
+  currentTurn String? @map("current_turn")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("games")
+}
+
+model UserRating {
+  id String @id @default(uuid())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique @map("user_id")
+
+  rating Int @default(1000)
+  gamesPlayed Int @default(0) @map("games_played")
+  wins Int @default(0)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("user_ratings")
+}
+
+enum GameStatus {
+  PENDING
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
 enum UserRole {
   REGULAR
   ADMIN
 }
-
-// enum AuthMethod {
-//   CREDENTIALS
-//   GOOGLE
-//   YANDEX
-// }
 
 enum TokenType {
   VERIFICATION
