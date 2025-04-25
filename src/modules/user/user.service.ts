@@ -14,6 +14,7 @@ export class UserService {
       },
       include: {
         accounts: true,
+        rating: true,
       },
     });
 
@@ -31,6 +32,7 @@ export class UserService {
       },
       include: {
         accounts: true,
+        rating: true,
       },
     });
 
@@ -51,9 +53,17 @@ export class UserService {
         displayName,
         picture,
         isVerified,
+        rating: {
+          create: {
+            rating: 1000,
+            gamesPlayed: 0,
+            wins: 0,
+          },
+        },
       },
       include: {
         accounts: true,
+        rating: true,
       },
     });
 

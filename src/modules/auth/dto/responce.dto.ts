@@ -1,4 +1,11 @@
-export class UserResponseDto {
+import { UserRating } from '@prisma/__generated__';
+
+interface Rank {
+  label: string;
+  slug: string;
+}
+
+export interface UserResponseDto {
   id: string;
   displayName: string;
   email: string;
@@ -7,4 +14,5 @@ export class UserResponseDto {
   isVerified: boolean;
   createdAt: Date;
   updatedAt: Date;
+  rating: (UserRating & { rank: Rank }) | null;
 }

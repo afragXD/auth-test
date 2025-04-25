@@ -9,13 +9,13 @@ import { RegisterDto } from './dto/register.dto';
 import { UserService } from '../user/user.service';
 import { Request, Response } from 'express';
 import { AppError } from '../../common/errors';
-import { User } from 'prisma/__generated__';
 import { LoginDto } from './dto/login.dto';
 import { verify } from 'argon2';
 import { ConfigService } from '@nestjs/config';
 import { ProviderService } from './provider/provider.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { toUserResponceDto } from '@/utils/toUserResponceDto';
+import { RelationsUser } from '@/types/user';
 
 @Injectable()
 export class AuthService {
@@ -60,7 +60,11 @@ export class AuthService {
         },
       },
       include: {
-        user: true,
+        user: {
+          include: {
+            rating: true,
+          },
+        },
       },
     });
 
@@ -123,7 +127,7 @@ export class AuthService {
     });
   }
 
-  private async saveSession(req: Request, user: User) {
+  private async saveSession(req: Request, user: RelationsUser) {
     return new Promise((resolve, reject) => {
       req.session.userId = user.id;
 
