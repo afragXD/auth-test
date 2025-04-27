@@ -1,10 +1,12 @@
 import { Hero } from './hero.base';
-import { Abbess } from './heroes/abbess.hero';
-import { Assassin } from './heroes/assassin.hero';
+import { Abbess, Assassin, DemonLord, Marauder, OrcKing } from './heroes';
 
 const HeroClassMap: Record<string, new (userId: string) => Hero> = {
   Assassin,
   Abbess,
+  Marauder,
+  OrcKing,
+  DemonLord,
 };
 
 export class HeroFactory {

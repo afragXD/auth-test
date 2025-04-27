@@ -15,4 +15,6 @@ export interface HeroStats {
   mana: number; //запас маны
   power: number; //мощь, сила магии
   accuracy: number; //accuracy , точность
+
+  size: 1 | 2 | 3;
 }

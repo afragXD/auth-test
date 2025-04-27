@@ -2,7 +2,7 @@ import { HeroStats } from './hero.type';
 
 export type HeroShortInfo = Pick<
   HeroStats,
-  'id' | 'name' | 'descriptionBase' | 'descriptionGame' | 'key'
+  'id' | 'name' | 'descriptionBase' | 'descriptionGame' | 'key' | 'size'
 >;
 
 export class Hero implements HeroStats {
@@ -21,6 +21,7 @@ export class Hero implements HeroStats {
   mana: number;
   power: number;
   accuracy: number;
+  size: 1 | 2 | 3;
 
   constructor() {
     this.id = 0;
@@ -38,6 +39,7 @@ export class Hero implements HeroStats {
     this.mana = 10;
     this.power = 1;
     this.accuracy = 95;
+    this.size = 1;
   }
 
   getShortInfo(): HeroShortInfo {
@@ -47,6 +49,7 @@ export class Hero implements HeroStats {
       descriptionBase: this.descriptionBase,
       descriptionGame: this.descriptionGame,
       key: this.key,
+      size: this.size,
     };
   }
 }
