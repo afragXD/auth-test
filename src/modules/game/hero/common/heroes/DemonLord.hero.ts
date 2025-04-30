@@ -1,20 +1,10 @@
 import { Hero } from '../hero.base';
+import { Position } from '../hero.type';
+import { HeroMetaData } from './meta.hero';
 
 export class DemonLord extends Hero {
-  constructor() {
-    super();
-    this.id = 5;
-    this.key = 'demon_lord';
-    this.name = 'Демон-принц';
-    this.descriptionBase =
-      'Глава дипломатической миссии Бездны в Империи, анонимно приглашённый в Стильбена, Как никто другой, он мог бы оказать решающее влияние борьбе с мятежным архимагом Клинкером, если бы не попал в пресловутую беременную нет любви.';
-    this.descriptionGame =
-      'Гигант, занимает 2 клетки. Три головы позволяют ему атаковать весь первый ряд противника. Превращает противников в каменные статуи, может перемешивать порядок противников. Может накладывать Огненный щит.';
-    this.health = 350;
-    this.damage = 28;
-    this.armor = 5;
-    this.initiative = 30;
-
-    this.size = 2;
+  constructor(playerId: string, position: Position = 0) {
+    const baseStats = HeroMetaData['demon_lord'];
+    super(baseStats, playerId, position);
   }
 }

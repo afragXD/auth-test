@@ -1,12 +1,13 @@
 import { Hero } from './hero.base';
 import { Abbess, Assassin, DemonLord, Marauder, OrcKing } from './heroes';
+import { HeroMetaData } from './heroes/meta.hero';
 
 const HeroClassMap: Record<string, new (userId: string) => Hero> = {
-  Assassin,
-  Abbess,
-  Marauder,
-  OrcKing,
-  DemonLord,
+  assassin: Assassin,
+  abbess: Abbess,
+  marauder: Marauder,
+  orc_king: OrcKing,
+  demon_lord: DemonLord,
 };
 
 export class HeroFactory {
@@ -19,6 +20,6 @@ export class HeroFactory {
   }
 
   static listAvailableHeroes(): string[] {
-    return Object.keys(HeroClassMap);
+    return Object.keys(HeroMetaData);
   }
 }

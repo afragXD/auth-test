@@ -1,18 +1,10 @@
 import { Hero } from '../hero.base';
+import { Position } from '../hero.type';
+import { HeroMetaData } from './meta.hero';
 
 export class Marauder extends Hero {
-  constructor() {
-    super();
-    this.id = 3;
-    this.key = 'marauder';
-    this.name = 'Мародёр';
-    this.descriptionBase =
-      'Мародёр - последний из народа тёмных эльфов, рьяный приверженец Старой Веры. Его сущность виде волка не раз помогала ему выживать в смертельных схватках.';
-    this.descriptionGame =
-      'Искусный лучник сюрпризом. Может обрушивать ливень стрел на ряд, замедляя и уменьшая криты. Мародёр превращается в оборотня, который имеет вард от Оружия и своим укусом ослабляет врагов. Мародёр умеет ловко управляться с инвентарём, иногда не тратя ход на использование предмета.';
-    this.health = 210;
-    this.damage = 24;
-    this.armor = 0;
-    this.initiative = 56;
+  constructor(playerId: string, position: Position = 0) {
+    const baseStats = HeroMetaData['marauder'];
+    super(baseStats, playerId, position);
   }
 }

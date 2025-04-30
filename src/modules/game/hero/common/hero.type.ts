@@ -10,11 +10,21 @@ export interface HeroStats {
   armor: number; //броня
   initiative: number; //инициатива
   dodge: number; //(уклонение)
-  crit: number; //шанс на крит, может быть положительным / отрицательным
+  luck: number; //шанс на крит, может быть положительным / отрицательным
   morale: number; //боевой дух
   mana: number; //запас маны
   power: number; //мощь, сила магии
   accuracy: number; //accuracy , точность
 
   size: 1 | 2 | 3;
+}
+
+export type Position = 0 | 1;
+
+export interface HeroAdvanced extends HeroStats {
+  playerId: string;
+  position: Position;
+
+  critModifier: number;
+  maxHealth: number;
 }
