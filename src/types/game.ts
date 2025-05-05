@@ -1,13 +1,15 @@
 import { GameStatus } from '@prisma/__generated__';
 
 export interface Game {
-  displayName: string;
+  roomName: string;
   player1Id: string;
-  player2Id?: string;
+  player2Id: string | null;
   status: GameStatus;
   maxRounds: number;
   initialTeamSize: number;
-  // TODO: добавить потом
-  // isRating: boolean;
-  // isPrivate: boolean;
+  isRating: boolean;
+  isPrivate: boolean;
+  roomPassword: string | null;
+
+  gayBoard: any;
 }

@@ -1,3 +1,4 @@
+import { RACES } from '../datastore';
 import { HeroStats } from '../hero.type';
 
 type Classes = 'assassin' | 'abbess' | 'demon_lord' | 'marauder' | 'orc_king';
@@ -22,6 +23,7 @@ export const HeroMetaData: Record<Classes, HeroStats> = {
     power: 15,
     accuracy: 92,
     size: 1,
+    race: RACES.HUMAN,
   },
   abbess: {
     id: 2,
@@ -42,6 +44,7 @@ export const HeroMetaData: Record<Classes, HeroStats> = {
     power: 28,
     accuracy: 105,
     size: 1,
+    race: RACES.HUMAN,
   },
   marauder: {
     id: 3,
@@ -62,6 +65,7 @@ export const HeroMetaData: Record<Classes, HeroStats> = {
     power: 25,
     accuracy: 95,
     size: 1,
+    race: RACES.HUMAN,
   },
   orc_king: {
     id: 4,
@@ -82,6 +86,7 @@ export const HeroMetaData: Record<Classes, HeroStats> = {
     power: 0,
     accuracy: 90,
     size: 1,
+    race: RACES.NONHUMAN,
   },
   demon_lord: {
     id: 5,
@@ -102,5 +107,6 @@ export const HeroMetaData: Record<Classes, HeroStats> = {
     power: 32,
     accuracy: 85,
     size: 2,
+    race: RACES.DEAMON,
   },
 };

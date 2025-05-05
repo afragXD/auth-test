@@ -19,4 +19,6 @@ export const AppError = {
   COMMENT_NOT_FOUND: 'Комментарий не найден',
   COMMENT_DELETE_FORBIDDEN: 'Нет прав на удаление данного комментария',
   COMMENT_EDIT_FORBIDDEN: 'Нет прав на изменение данного комментария',
+  
+  GAME_LENGTH: 'Название должно быть длиннее или равно 6 символам',
 };

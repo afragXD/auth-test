@@ -1,3 +1,5 @@
+import { RACES } from "./datastore";
+
 export interface HeroStats {
   id: number;
   key: string;
@@ -17,6 +19,7 @@ export interface HeroStats {
   accuracy: number; //accuracy , точность
 
   size: 1 | 2 | 3;
+  race: RACES;
 }
 
 export type Position = 0 | 1;
@@ -27,4 +30,6 @@ export interface HeroAdvanced extends HeroStats {
 
   critModifier: number;
   maxHealth: number;
+  maxMana: number;
+  level: number;
 }
