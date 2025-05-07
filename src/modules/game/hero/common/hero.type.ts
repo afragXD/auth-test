@@ -1,4 +1,4 @@
-import { RACES } from "./datastore";
+import { RACES } from './datastore';
 
 export interface HeroStats {
   id: number;

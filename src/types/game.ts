@@ -1,6 +1,7 @@
 import { GameStatus } from '@prisma/__generated__';
 
 export interface Game {
+  id: string;
   roomName: string;
   player1Id: string;
   player2Id: string | null;
@@ -11,5 +12,9 @@ export interface Game {
   isPrivate: boolean;
   roomPassword: string | null;
 
-  gayBoard: any;
+  gameBoard: any[];
+}
+
+export interface GameWithId extends Game {
+  id: string;
 }

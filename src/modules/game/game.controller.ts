@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Param, Post, Sse } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Sse } from '@nestjs/common';
 import { GameService } from './game.service';
 import { CreateGameDto } from './dto/create-game.dto';
 import { Authorized } from '../auth/decorators/authorized.decorator';
@@ -19,12 +19,21 @@ export class GameController {
 
   @Authorization()
   @Sse(':id/stream')
-  streamGame(@Param('id') gameId: string, @Authorized('id') userId: string): Observable<Game> {
+  streamGame(
+    @Param('id') gameId: string,
+    @Authorized('id') userId: string,
+  ): Observable<{ data: Game }> {
     return this.gameService.getGameStream(gameId).pipe(
       map((data) => {
         console.log(`gameId: ${gameId}, userId: ${userId}`);
-        return data;
+        return { data };
       }),
     );
+  }
+
+  @Authorization()
+  @Get()
+  getOpenSessions(@Authorized('id') userId: string) {
+    return this.gameService.getAvailableGames(userId);
   }
 }

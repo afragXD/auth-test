@@ -3,7 +3,6 @@ import { HeroAdvanced, HeroStats, Position } from './hero.type';
 import { MessageManager } from '../../message-manager/message-manager.service';
 import { RACES } from './datastore';
 
-const CRIT_MODIFIER = 1.5;
 type KillTypes = 1;
 
 export class Hero implements HeroAdvanced {
@@ -35,11 +34,7 @@ export class Hero implements HeroAdvanced {
 
   protected messageManager: MessageManager;
 
-  constructor(
-    stats: HeroStats,
-    playerId: string,
-    position: Position,
-  ) {
+  constructor(stats: HeroStats, playerId: string, position: Position) {
     this.id = stats.id;
     this.key = stats.key;
     this.name = stats.name;
@@ -113,7 +108,6 @@ export class Hero implements HeroAdvanced {
   set mana(value) {
     this._mana = value;
     // if (value < 0) {
-      
     // } else {
     //   this._mana = value;
     // }
@@ -153,7 +147,7 @@ export class Hero implements HeroAdvanced {
     return false;
   }
 
-  criticalFailure(other: Hero) {
+  criticalFailure() {
     const punishment = Math.floor(Math.random() * 3);
     if (punishment === 0) {
       this.messageManager.send({
@@ -218,7 +212,7 @@ export class Hero implements HeroAdvanced {
           target: other.name,
         });
         this.morale -= 5;
-        this.criticalFailure(other);
+        this.criticalFailure();
         return -1;
       }
       return 1;
@@ -229,7 +223,10 @@ export class Hero implements HeroAdvanced {
     if (this.evade(other)) return 0;
     const critModifier = this.crit(other);
     if (critModifier === -1) return 0;
-    const damage = Math.max(1, Math.round((this.damage - other.armor + randomIntFromInterval(0, 2)) * critModifier));
+    const damage = Math.max(
+      1,
+      Math.round((this.damage - other.armor + randomIntFromInterval(0, 2)) * critModifier),
+    );
     other.health -= damage;
     this.messageManager.send({
       type: 'attack',
@@ -247,7 +244,10 @@ export class Hero implements HeroAdvanced {
     if (this.evade(other)) return 0;
     const critModifier = this.crit(other);
     if (critModifier === -1) return 0;
-    const damage = Math.max(1, Math.round((this.power + randomIntFromInterval(-5, 5)) * critModifier));
+    const damage = Math.max(
+      1,
+      Math.round((this.power + randomIntFromInterval(-5, 5)) * critModifier),
+    );
     other.health -= damage;
     this.messageManager.send({
       type: 'attack',

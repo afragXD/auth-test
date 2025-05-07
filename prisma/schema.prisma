@@ -105,6 +105,7 @@ model Game {
 
 enum GameStatus {
   PENDING
+  CHOOSING
   ACTIVE
   COMPLETED
   CANCELLED

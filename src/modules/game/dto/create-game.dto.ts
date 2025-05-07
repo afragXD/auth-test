@@ -3,17 +3,21 @@ import {
   IsBoolean,
   IsNotEmpty,
   IsNumber,
-  IsOptional,
   IsString,
   Max,
+  MaxLength,
   Min,
   MinLength,
+  ValidateIf,
 } from 'class-validator';
 
 export class CreateGameDto {
   @IsNotEmpty()
   @MinLength(6, {
-    message: AppError.GAME_LENGTH,
+    message: AppError.GAME_MIN_LENGTH,
+  })
+  @MaxLength(50, {
+    message: AppError.GAME_MAX_LENGTH,
   })
   roomName: string;
 
@@ -33,7 +37,11 @@ export class CreateGameDto {
   @IsBoolean()
   isPrivate: boolean;
 
+  @ValidateIf((o: CreateGameDto) => o.isPrivate === true)
+  @IsNotEmpty()
   @IsString()
-  @IsOptional()
+  @MinLength(6, {
+    message: AppError.PASSWORD_LENGTH,
+  })
   roomPassword: string;
 }
